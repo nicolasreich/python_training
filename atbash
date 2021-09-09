@@ -1,0 +1,43 @@
+import sys
+ALL_LOWER = "abcdefghijklmnopqrstuvwxyz"
+ALL_LOWER_LIST = list(ALL_LOWER)
+ALL_LOWER_REVERSED = ALL_LOWER_LIST[::-1]
+ALL_UPPER_LIST = list(ALL_LOWER.upper())
+ALL_UPPER_REVERSED = ALL_UPPER_LIST[::-1]
+LIST_DICT = {"lower": {"normal": ALL_LOWER_LIST, "reversed": ALL_LOWER_REVERSED}, "upper": {"normal": ALL_UPPER_LIST, "reversed": ALL_UPPER_REVERSED}}
+
+def main():
+    error_message = "Expected 2 arguments: <--encrypt/--decrypt> <plaintext/ciphertext>"
+    if len(sys.argv) != 3 or sys.argv[1] not in ["--encrypt", "--decrypt"]:
+        print(error_message)
+        exit(-1)
+    else:
+        function = sys.argv[1]
+        text = sys.argv[2]
+        print(endecrypt(function, text))
+        return
+
+def endecrypt(function: str, text: str) -> str:
+    result = ""
+    if function == "--encrypt":
+        first_list_order = "normal"
+        second_list_order = "reversed"
+    else:
+        first_list_order = "reversed"
+        second_list_order = "normal"
+    for char in text:
+        if char.islower():
+            case = "lower"
+        else:
+            case = "upper"
+        first_list = LIST_DICT[case][first_list_order]
+        second_list = LIST_DICT[case][second_list_order]
+        try:
+            result += second_list[first_list.index(char)]
+        except:
+            print(f"Character {char} is not a letter")
+            exit(-1)
+    return result
+
+if __name__ == "__main__":
+    main()

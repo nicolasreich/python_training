@@ -1,0 +1,23 @@
+import sys
+from collections import Counter
+import ast
+def main():
+    # Argument checking
+    # Number of args
+    if len(sys.argv) != 2:
+        print("Wrong number of arguments")
+        exit(-1)
+    # Arg is a list of integers
+    try:
+        file_content = open(sys.argv[1]).read()
+        numbers = ast.literal_eval(file_content)
+    except:
+        print("The argument should be a python list")
+        exit(-1)
+    frequency = Counter(numbers)
+    sorted_counter = frequency.most_common()
+    print(f"Three least frequent: {sorted_counter[:3]}, Three most frequent: {sorted_counter[-3:]}")
+    return
+
+if __name__ == "__main__":
+    main()

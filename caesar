@@ -1,0 +1,53 @@
+import sys
+
+def main():
+    args_error_message = "Expecting 3 args: <--encrypt/--decrypt> <plaintext/ciphertext> <key>"
+    if len(sys.argv) != 4 or sys.argv[1] not in ["--encrypt", "--decrypt"]:
+        print(args_error_message)
+        exit(-1)
+    function = sys.argv[1]
+    text = sys.argv[2]
+    try:
+        key = int(sys.argv[3])
+    except:
+        print(args_error_message)
+        exit(-1)
+
+    if function == "--encrypt":
+        print(encrypt(text, key))
+        return
+    else:
+        print(decrypt(text, key))
+        return
+
+
+# Encrypt a plaintext using the provided key
+def encrypt(plaintext: str, key: int) -> str:
+    ciphertext = ""
+    lower_a = ord("a")
+    upper_a = ord("A")
+    for char in plaintext:
+        if char.islower():
+            base = lower_a
+        else:
+            base = upper_a
+        encrypted_char_ord = (((ord(char) - base) + key) % 26) + base
+        ciphertext += chr(encrypted_char_ord)
+    return ciphertext
+
+# Decrypt a ciphertext using the provided key
+def decrypt(ciphertext: str, key: int) -> str:
+    plaintext = ""
+    lower_a = ord("a")
+    upper_a = ord("A")
+    for char in ciphertext:
+        if char.islower():
+            base = lower_a
+        else:
+            base = upper_a
+        decrypted_char_ord = (((ord(char) - base) - key) % 26) + base
+        plaintext += chr(decrypted_char_ord)
+    return plaintext
+
+if __name__ == "__main__":
+    main()

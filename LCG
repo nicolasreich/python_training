@@ -1,0 +1,33 @@
+import sys
+
+# Arguments: modulus, multiplier, increment, seed, number of desired values
+def main():
+    # Argument checking
+    # Number of arguments
+    if len(sys.argv) != 6:
+        print("Wrong number of arguments")
+        exit(-1)
+    
+    # Arguments should be integers
+    try:
+        m, a, c, x0, n = (int(arg) for arg in sys.argv[1:])
+    except:
+        print("Arguments should be integers")
+        exit(-1)
+    
+    # Various constraints on arguments
+    if not (( m > 0) and (0 < a < m) and (0 <= c < m) and (0 <= x0 <= m) and (0 < n)):
+        print("Invalid argument values")
+        exit(-1)
+    result = [x0] * n
+    for i in range(len(result) - 1):
+        xn = result[i]
+        result[i+1] = next_value(m, a, c, xn)
+    print(result)
+    return
+
+def next_value(m: int, a: int, c: int, xn: int) -> int:
+    return (a * xn + c) % m
+
+if __name__ == "__main__":
+  main()
